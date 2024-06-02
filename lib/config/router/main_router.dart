@@ -21,6 +21,13 @@ final mainRouter = GoRouter(
             return CampeonatoById(id: int.parse(idCampeonato));
           },
         ),
+        GoRoute(
+          path: ':id/equipos',
+          builder: (context, state) {
+            final idCampeonato = state.pathParameters['id'] ?? '0';
+            return CampeonatoEquipos(idCampeonato: int.parse(idCampeonato));
+          },
+        ),
       ],
     ),
     GoRoute(

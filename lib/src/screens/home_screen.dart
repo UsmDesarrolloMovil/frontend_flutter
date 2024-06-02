@@ -35,15 +35,20 @@ class _HomeScreenState extends State<HomeScreen> {
           const Spacer(),
           Visibility(
             visible: selectedContainer != null,
-            child: CustomFilledButton(onPressed: () {
-              switch (getSelection()) {
-                case 0:
-                  context.push('/campeonatos');
-                case 1:
-                  context.push('/equipos');
-                default:
-              }
-            }),
+            child: CustomFilledButton(
+              text: 'Continuar',
+              animated: true,
+              fullWidth: true,
+              onPressed: () {
+                switch (getSelection()) {
+                  case 0:
+                    context.push('/campeonatos');
+                  case 1:
+                    context.push('/equipos');
+                  default:
+                }
+              },
+            ),
           ),
           const SizedBox(height: 15),
         ],

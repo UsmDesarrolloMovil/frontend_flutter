@@ -19,8 +19,6 @@ class MainTheme {
           titleSmall: GoogleFonts.montserratAlternates().copyWith(fontSize: 20),
         ),
 
-        scaffoldBackgroundColor: Colors.transparent,
-
         ///* Buttons
         filledButtonTheme: FilledButtonThemeData(
           style: ButtonStyle(
@@ -38,7 +36,6 @@ class MainTheme {
             fontSize: 25,
             fontWeight: FontWeight.bold,
           ),
-          shape: const Border(bottom: BorderSide.none),
         ),
       );
 }
