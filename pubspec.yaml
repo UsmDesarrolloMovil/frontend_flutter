@@ -27,3 +27,4 @@ flutter:
   assets:
     - .env
     - google_fonts/montserrat_alternates/
+    - assets/loaders/
