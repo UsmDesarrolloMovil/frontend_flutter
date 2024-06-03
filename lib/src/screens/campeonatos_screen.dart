@@ -2,6 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:esports_app/models/campeonato_model.dart';
 import 'package:esports_app/src/services/services.dart';
 import 'package:esports_app/src/widgets/gradient_scaffold.dart';
+import 'package:esports_app/src/widgets/image_with_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_material_design_icons/flutter_material_design_icons.dart';
 import 'package:go_router/go_router.dart';
@@ -14,6 +15,7 @@ class CampeonatosScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GradientScaffold(
+      addPadding: false,
       appbarWidget: const Row(
         children: [
           Icon(
@@ -71,12 +73,7 @@ class _ListaCampeonatos extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
                 child: Stack(
                   children: [
-                    Image.network(
-                      campeonato.imgUrl,
-                      fit: BoxFit.cover,
-                      width: double.infinity,
-                      height: double.infinity,
-                    ),
+                    ImageWithLoader(imageUrl: campeonato.imgUrl),
                     const CustomGradient(
                       begin: Alignment.centerRight,
                       end: Alignment.topRight,

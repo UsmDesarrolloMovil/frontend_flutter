@@ -5,11 +5,13 @@ class GradientScaffold extends StatelessWidget {
   final bool showBackArrow;
   final Widget? appbarWidget;
   final Widget? floatingActionButton;
+  final bool addPadding;
 
   const GradientScaffold({
     super.key,
     required this.body,
     this.showBackArrow = false,
+    this.addPadding = true,
     this.appbarWidget,
     this.floatingActionButton,
   });
@@ -33,9 +35,9 @@ class GradientScaffold extends StatelessWidget {
             ),
 
       body: Container(
-        padding: appbarWidget == null
+        padding: addPadding
             ? EdgeInsets.only(
-                top: (MediaQuery.of(context).padding.top) + size.height * 0.1)
+                top: (MediaQuery.of(context).padding.top) + size.height * 0.12)
             : null,
         decoration: appbarWidget == null
             ? BoxDecoration(
