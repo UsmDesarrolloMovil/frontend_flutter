@@ -79,7 +79,100 @@ class _EquipoByIdState extends State<EquipoById> {
                                               Text(jugadores[index]['nombre']),
                                           trailing: Text(jugadores[index]['id']
                                               .toString()),
-                                          onTap: () {},
+                                          onTap: () {
+                                            showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                TextEditingController
+                                                    _nombreJugadorCtrl =
+                                                    TextEditingController();
+                                                _nombreJugadorCtrl.text =
+                                                    jugadores[index]['nombre'];
+
+                                                return AlertDialog(
+                                                  title: Text(
+                                                      "Editar ${jugadores[index]['nombre']} ?"),
+                                                  content: TextFormField(
+                                                    controller:
+                                                        _nombreJugadorCtrl,
+                                                    decoration:
+                                                        const InputDecoration(
+                                                            labelText:
+                                                                'Nombre'),
+                                                    validator: (value) {
+                                                      if (value == null ||
+                                                          value.isEmpty) {
+                                                        return 'Por favor ingrese el nombre';
+                                                      }
+                                                      return null;
+                                                    },
+                                                  ),
+                                                  actions: [
+                                                    TextButton(
+                                                      child: Text("Cancel"),
+                                                      onPressed: () {
+                                                        context.pop();
+                                                      },
+                                                    ),
+                                                    TextButton(
+                                                      child: Text("Editar"),
+                                                      onPressed: () {
+                                                        if (_formKey
+                                                            .currentState!
+                                                            .validate()) {
+                                                          final jugadorEdited =
+                                                              <String, dynamic>{
+                                                            'nombre':
+                                                                _nombreJugadorCtrl
+                                                                    .text,
+                                                            'equipo_id':
+                                                                widget.id,
+                                                          };
+                                                          EquipoService()
+                                                              .updateJugador(
+                                                                  jugadores[
+                                                                          index]
+                                                                      ['id'],
+                                                                  jugadorEdited)
+                                                              .then((_) {
+                                                            ScaffoldMessenger
+                                                                    .of(context)
+                                                                .showSnackBar(
+                                                              SnackBar(
+                                                                  content: Text(
+                                                                      'Jugador Editado')),
+                                                            );
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop();
+
+                                                            setState(() {});
+                                                          }).catchError(
+                                                                  (error) {
+                                                            ScaffoldMessenger
+                                                                    .of(context)
+                                                                .showSnackBar(
+                                                              SnackBar(
+                                                                  content: Text(
+                                                                      'Error: $error')),
+                                                            );
+                                                          });
+                                                        } else {
+                                                          ScaffoldMessenger.of(
+                                                                  context)
+                                                              .showSnackBar(
+                                                            SnackBar(
+                                                                content: Text(
+                                                                    'No es valido el form')),
+                                                          );
+                                                        }
+                                                      },
+                                                    ),
+                                                  ],
+                                                );
+                                              },
+                                            );
+                                          },
                                           onLongPress: () {
                                             showDialog(
                                               context: context,

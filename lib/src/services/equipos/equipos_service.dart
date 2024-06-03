@@ -56,4 +56,9 @@ class EquipoService {
   Future<void> deleteJugador(int id) async {
     await dio.delete('/jugadores/$id');
   }
+
+  Future<void> updateJugador(
+      int idJugador, Map<String, dynamic> jugadorData) async {
+    await dio.put('/jugadores/$idJugador', data: jugadorData);
+  }
 }
