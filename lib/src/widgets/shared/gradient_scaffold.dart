@@ -44,13 +44,14 @@ class GradientScaffold extends StatelessWidget {
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  stops: const [0.1, 0.15, 0.2, 0.25, 0.3, 1.0],
+                  stops: const [0.1, 0.2, 0.3, 0.45, 0.6, 0.7, 0.9],
                   colors: [
                     colors.onError,
                     colors.onError.withOpacity(0.8),
+                    colors.onError.withOpacity(0.65),
                     colors.onError.withOpacity(0.5),
                     colors.onError.withOpacity(0.3),
-                    colors.onError.withOpacity(0.2),
+                    colors.onError.withOpacity(0.15),
                     Colors.transparent,
                   ],
                 ),
