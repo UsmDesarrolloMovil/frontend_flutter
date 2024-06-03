@@ -19,7 +19,7 @@ class EquipoModel {
       nombre: equipo['nombre'],
       juegos: equipo['juegos'],
       imgUrl: equipo['imagen_url'],
-      puntos: equipo['puntos'],
+      puntos: equipo['puntos'] == null ? 0 : equipo['puntos'],
     );
   }
 
