@@ -24,16 +24,17 @@ class EquipoById extends StatelessWidget {
                 );
               }
               final data = snapshot.data;
+              final equipo = EquipoModel.fromApi(data as Map<String, dynamic>);
               TextEditingController _nombreCtrl = TextEditingController();
-              _nombreCtrl.text = data['nombre'];
+              _nombreCtrl.text = equipo.nombre;
               TextEditingController _juegosCtrl = TextEditingController();
-              _juegosCtrl.text = data['juegos'];
+              _juegosCtrl.text = equipo.juegos;
 
               TextEditingController _imagenUrlCtrl = TextEditingController();
-              _imagenUrlCtrl.text = data['imagen_url'];
+              _imagenUrlCtrl.text = equipo.imgUrl;
               final _formKey = GlobalKey<FormState>();
               return Padding(
-                padding: const EdgeInsets.only(top: 100.0, left: 10, right: 10),
+                padding: const EdgeInsets.only(left: 10, right: 10),
                 child: Form(
                   key: _formKey,
                   child: Column(
@@ -74,16 +75,13 @@ class EquipoById extends StatelessWidget {
                       ElevatedButton(
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            // Lógica para actualizar los datos del equipo
-                            final updatedEquipo = EquipoModel(
-                              id: data['id'],
-                              nombre: _nombreCtrl.text,
-                              juegos: _juegosCtrl.text,
-                              imgUrl: _imagenUrlCtrl.text,
-                              puntos: data['puntos'],
-                            );
+                            final updatedEquipo = <String, dynamic>{
+                              'nombre': _nombreCtrl.text,
+                              'juegos': _juegosCtrl.text,
+                              'imagen_url': _imagenUrlCtrl.text,
+                            };
                             EquipoService()
-                                .updateEquipo(data['id'],
+                                .updateEquipo(equipo.id,
                                     updatedEquipo as Map<String, dynamic>)
                                 .then((_) {
                               ScaffoldMessenger.of(context).showSnackBar(

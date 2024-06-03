@@ -34,4 +34,8 @@ class EquipoService {
       int idEquipo, Map<String, dynamic> equipoData) async {
     await dio.put('/equipos/$idEquipo', data: equipoData);
   }
+
+  Future<void> createEquipo(Map<String, dynamic> equipoData) async {
+    await dio.post('/equipos', data: equipoData);
+  }
 }

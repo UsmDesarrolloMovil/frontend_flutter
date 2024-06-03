@@ -11,6 +11,7 @@ class EquiposScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GradientScaffold(
+        addPadding: false,
         appbarWidget: const Row(
           children: [
             Icon(
@@ -23,7 +24,7 @@ class EquiposScreen extends StatelessWidget {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            //AGREGAR UN EQUIPO
+            _showAddEquipoDialog(context);
           },
           child: Icon(Icons.add),
         ),
@@ -62,5 +63,94 @@ class EquiposScreen extends StatelessWidget {
                     );
                   });
             }));
+  }
+
+  void _showAddEquipoDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        final _formKey = GlobalKey<FormState>();
+        TextEditingController _nombreCtrl = TextEditingController();
+        TextEditingController _juegosCtrl = TextEditingController();
+        TextEditingController _imagenUrlCtrl = TextEditingController();
+
+        return AlertDialog(
+          title: Text('Añadir Equipo'),
+          content: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                TextFormField(
+                  controller: _nombreCtrl,
+                  decoration: InputDecoration(labelText: 'Nombre'),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Por favor ingrese el nombre';
+                    }
+                    return null;
+                  },
+                ),
+                TextFormField(
+                  decoration: InputDecoration(labelText: 'Juegos'),
+                  controller: _juegosCtrl,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Por favor ingrese los juegos';
+                    }
+                    return null;
+                  },
+                ),
+                TextFormField(
+                  controller: _imagenUrlCtrl,
+                  decoration: InputDecoration(labelText: 'URL de la Imagen'),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Por favor ingrese la URL de la imagen';
+                    }
+                    return null;
+                  },
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Cancelar'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+                child: Text('Guardar'),
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    final newEquipo = <String, dynamic>{
+                      'nombre': _nombreCtrl.text,
+                      'juegos': _juegosCtrl.text,
+                      'imagen_url': _imagenUrlCtrl.text,
+                    };
+                    EquipoService()
+                        .createEquipo(newEquipo as Map<String, dynamic>)
+                        .then((_) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Equipo creado')),
+                      );
+                    }).catchError((error) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Error: $error')),
+                      );
+                    });
+                    Navigator.of(context).pop();
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('No es valido el form')),
+                    );
+                  }
+                }),
+          ],
+        );
+      },
+    );
   }
 }
