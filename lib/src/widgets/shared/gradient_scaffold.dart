@@ -34,30 +34,66 @@ class GradientScaffold extends StatelessWidget {
               elevation: 0,
             ),
 
-      body: Container(
-        padding: addPadding
-            ? EdgeInsets.only(
-                top: (MediaQuery.of(context).padding.top) + size.height * 0.12)
-            : null,
-        decoration: appbarWidget == null
-            ? BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  stops: const [0.1, 0.2, 0.3, 0.45, 0.6, 0.7, 0.9],
-                  colors: [
-                    colors.onError,
-                    colors.onError.withOpacity(0.8),
-                    colors.onError.withOpacity(0.65),
-                    colors.onError.withOpacity(0.5),
-                    colors.onError.withOpacity(0.3),
-                    colors.onError.withOpacity(0.15),
-                    Colors.transparent,
-                  ],
-                ),
-              )
-            : null,
-        child: body,
+      body: SizedBox(
+        width: double.infinity,
+        height: double.infinity,
+        child: Stack(
+          children: [
+            Container(
+              width: size.width,
+              height: size.height * 0.4,
+              decoration: appbarWidget == null
+                  ? BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        stops: const [
+                          0.05,
+                          0.1,
+                          0.2,
+                          0.3,
+                          0.4,
+                          0.5,
+                          0.6,
+                          0.7,
+                          0.8,
+                          0.9,
+                          1.0
+                        ],
+                        colors: [
+                          colors.onError,
+                          colors.onError.withOpacity(0.9),
+                          colors.onError.withOpacity(0.8),
+                          colors.onError.withOpacity(0.7),
+                          colors.onError.withOpacity(0.6),
+                          colors.onError.withOpacity(0.5),
+                          colors.onError.withOpacity(0.4),
+                          colors.onError.withOpacity(0.3),
+                          colors.onError.withOpacity(0.2),
+                          colors.onError.withOpacity(0.1),
+                          Colors.transparent,
+                        ],
+                      ),
+                    )
+                  : null,
+            ),
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: 0,
+              top: 0,
+              child: Container(
+                padding: addPadding
+                    ? EdgeInsets.only(
+                        top: (MediaQuery.of(context).padding.top) +
+                            size.height * 0.12)
+                    : null,
+                // width: ,
+                child: body,
+              ),
+            ),
+          ],
+        ),
       ),
       floatingActionButton: floatingActionButton,
     );
