@@ -17,6 +17,28 @@ class CampeonatoEquipos extends StatelessWidget {
     final textStyles = Theme.of(context).textTheme;
     final colors = Theme.of(context).colorScheme;
 
+    void openDialogDeleteEquipo(BuildContext context, equipoId) {
+      showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('¿Estas seguro?'),
+          content:
+              const Text('Esta accion eliminará este Equipo del Campeonato.'),
+          actions: [
+            TextButton(
+              onPressed: () => context.pop(),
+              child: const Text('Cancelar'),
+            ),
+            FilledButton(
+              onPressed: () {},
+              child: const Text('Aceptar'),
+            )
+          ],
+        ),
+      );
+    }
+
     return GradientScaffold(
         floatingActionButton: SlideInRight(
           delay: const Duration(seconds: 1),
@@ -64,6 +86,14 @@ class CampeonatoEquipos extends StatelessWidget {
 
                       return FadeInUp(
                         child: InkWell(
+                          radius: 80,
+                          customBorder: const RoundedRectangleBorder(),
+                          borderRadius: BorderRadius.circular(10),
+                          highlightColor: Colors.transparent,
+                          focusColor: colors.onError.withOpacity(.5),
+                          splashColor: colors.onError.withOpacity(.5),
+                          onLongPress: () =>
+                              openDialogDeleteEquipo(context, equipo.id),
                           onTap: () => infoEquipoDialog(context, equipo),
                           child: Container(
                             padding: const EdgeInsets.symmetric(
