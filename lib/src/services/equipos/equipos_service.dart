@@ -27,7 +27,7 @@ class EquipoService {
   }
 
   Future<List<dynamic>> getJugadoresEquipo(int idEquipo) async {
-    final response = await dio.get('/jugadores/equipo/$idEquipo');
+    final response = await dio.get('/equipos/$idEquipo/jugadores');
     return response.data;
   }
 
@@ -47,5 +47,13 @@ class EquipoService {
 
   Future<void> deleteEquipo(int id) async {
     await dio.delete('/equipos/$id');
+  }
+
+  Future<void> createJugadores(Map<String, dynamic> jugadorData) async {
+    await dio.post('/jugadores', data: jugadorData);
+  }
+
+  Future<void> deleteJugador(int id) async {
+    await dio.delete('/jugadores/$id');
   }
 }
