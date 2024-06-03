@@ -20,7 +20,7 @@ class EquipoService {
     return response.data;
   }
 
-  Future<List<dynamic>> getPartidos(int idEquipo) async {
+  Future<Map<String, dynamic>> getPartidos(int idEquipo) async {
     final response = await dio.get('/equipos/$idEquipo/partidos');
 
     return response.data;
