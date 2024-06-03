@@ -1,9 +1,9 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:esports_app/models/campeonato_model.dart';
 import 'package:esports_app/src/services/campeonatos/campeonatos_service.dart';
-import 'package:esports_app/src/widgets/custom_filled_button.dart';
+import 'package:esports_app/src/widgets/shared/custom_filled_button.dart';
 import 'package:esports_app/src/widgets/dialogs/dialogs.dart';
-import 'package:esports_app/src/widgets/gradient_scaffold.dart';
+import 'package:esports_app/src/widgets/shared/gradient_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_material_design_icons/flutter_material_design_icons.dart';
 import 'package:go_router/go_router.dart';

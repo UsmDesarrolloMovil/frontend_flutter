@@ -1,3 +1,5 @@
+export 'package:esports_app/src/pages/equipos_pages/equipos_partidos_by_id.dart';
+
 export 'package:esports_app/src/pages/campeonatos_pages/campeonato_edit.dart';
 
 export 'package:esports_app/src/pages/calendario_pages/add_partido_to_campeonato.dart';

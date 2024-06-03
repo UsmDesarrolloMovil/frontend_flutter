@@ -1,4 +1,4 @@
-import 'package:esports_app/src/widgets/image_with_loader.dart';
+import 'package:esports_app/src/widgets/shared/image_with_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -56,7 +56,7 @@ void infoEquipoDialog(BuildContext context, EquipoModel equipo) {
         ),
         actions: [
           FilledButton(
-            onPressed: () => context.pop(),
+            onPressed: () => context.push('/equipos/${equipo.id}/partidos'),
             child: const Text('Ver Partidos'),
           ),
           FilledButton(

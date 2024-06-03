@@ -1,6 +1,6 @@
 import 'package:esports_app/models/equipo_model.dart';
 import 'package:esports_app/src/services/equipos/equipos_service.dart';
-import 'package:esports_app/src/widgets/gradient_scaffold.dart';
+import 'package:esports_app/src/widgets/shared/gradient_scaffold.dart';
 import 'package:flutter/material.dart';
 
 class EquipoById extends StatelessWidget {

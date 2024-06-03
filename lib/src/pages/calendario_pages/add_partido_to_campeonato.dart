@@ -1,4 +1,4 @@
-import 'package:esports_app/src/widgets/gradient_scaffold.dart';
+import 'package:esports_app/src/widgets/shared/gradient_scaffold.dart';
 import 'package:flutter/material.dart';
 
 class AddPartidoToCampeonato extends StatelessWidget {

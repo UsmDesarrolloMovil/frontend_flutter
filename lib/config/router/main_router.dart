@@ -74,6 +74,13 @@ final mainRouter = GoRouter(
             return EquipoById(id: int.parse(idEquipo));
           },
         ),
+        GoRoute(
+          path: ':id/partidos',
+          builder: (context, state) {
+            final idEquipo = state.pathParameters['id'] ?? '0';
+            return EquiposPartidosById(idEquipo: int.parse(idEquipo));
+          },
+        ),
       ],
     ),
     GoRoute(

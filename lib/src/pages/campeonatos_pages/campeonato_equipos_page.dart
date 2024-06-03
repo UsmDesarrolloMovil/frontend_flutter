@@ -2,8 +2,8 @@ import 'package:animate_do/animate_do.dart';
 import 'package:esports_app/models/equipo_model.dart';
 import 'package:esports_app/src/services/services.dart';
 import 'package:esports_app/src/widgets/dialogs/dialogs.dart';
-import 'package:esports_app/src/widgets/gradient_scaffold.dart';
-import 'package:esports_app/src/widgets/image_with_loader.dart';
+import 'package:esports_app/src/widgets/shared/gradient_scaffold.dart';
+import 'package:esports_app/src/widgets/shared/image_with_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
