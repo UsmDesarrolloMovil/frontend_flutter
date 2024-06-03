@@ -5,9 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_material_design_icons/flutter_material_design_icons.dart';
 import 'package:go_router/go_router.dart';
 
-class EquiposScreen extends StatelessWidget {
+class EquiposScreen extends StatefulWidget {
   const EquiposScreen({super.key});
 
+  @override
+  State<EquiposScreen> createState() => _EquiposScreenState();
+}
+
+class _EquiposScreenState extends State<EquiposScreen> {
   @override
   Widget build(BuildContext context) {
     return GradientScaffold(
@@ -56,9 +61,49 @@ class EquiposScreen extends StatelessWidget {
                       title: Text(equipos[index].nombre),
                       subtitle: Text(equipos[index].juegos),
                       onTap: () {
-                        context.push('/equipos/${equipos[index].id}');
+                        context
+                            .push('/equipos/${equipos[index].id}')
+                            .then((value) {
+                          setState(() {});
+                        });
+                      },
+                      onLongPress: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text("Borrar ${equipos[index].nombre} ?"),
+                              content: Text("Seguro desea borrar este equipo?"),
+                              actions: [
+                                TextButton(
+                                  child: Text("Cancel"),
+                                  onPressed: () {
+                                    context.pop();
+                                  },
+                                ),
+                                TextButton(
+                                  child: Text("BORRAR"),
+                                  onPressed: () {
+                                    EquipoService()
+                                        .deleteEquipo(equipos[index].id)
+                                        .then((_) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                            content: Text('Equipo borrado')),
+                                      );
+                                      context.pop();
+                                      setState(() {});
+                                    });
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
 
-                        // Acción al hacer clic en el ListTile
+                        setState(() {});
+                        ;
                       },
                     );
                   });
@@ -136,12 +181,14 @@ class EquiposScreen extends StatelessWidget {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text('Equipo creado')),
                       );
+                      Navigator.of(context).pop();
+
+                      setState(() {});
                     }).catchError((error) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text('Error: $error')),
                       );
                     });
-                    Navigator.of(context).pop();
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text('No es valido el form')),
