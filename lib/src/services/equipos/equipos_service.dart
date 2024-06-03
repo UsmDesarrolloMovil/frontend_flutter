@@ -38,4 +38,8 @@ class EquipoService {
   Future<void> createEquipo(Map<String, dynamic> equipoData) async {
     await dio.post('/equipos', data: equipoData);
   }
+
+  Future<void> deleteEquipo(int id) async {
+    await dio.delete('/equipos/$id');
+  }
 }
