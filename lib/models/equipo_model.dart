@@ -4,6 +4,7 @@ class EquipoModel {
   String juegos;
   String imgUrl;
   int puntos;
+  List<String> jugadores;
 
   EquipoModel({
     required this.id,
@@ -11,6 +12,7 @@ class EquipoModel {
     required this.juegos,
     required this.imgUrl,
     required this.puntos,
+    required this.jugadores,
   });
 
   factory EquipoModel.fromApi(Map<String, dynamic> equipo) {
@@ -19,7 +21,8 @@ class EquipoModel {
       nombre: equipo['nombre'],
       juegos: equipo['juegos'],
       imgUrl: equipo['imagen_url'],
-      puntos: equipo['puntos'] == null ? 0 : equipo['puntos'],
+      puntos: equipo['puntos'] ?? 0,
+      jugadores: List<String>.from(equipo['jugadores'] ?? []),
     );
   }
 

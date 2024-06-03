@@ -15,6 +15,13 @@ class CampeonatosScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GradientScaffold(
+      floatingActionButton: SlideInRight(
+        delay: const Duration(seconds: 1),
+        child: FloatingActionButton(
+          onPressed: () => context.push('/addCampeonato'),
+          child: const Icon(Icons.add),
+        ),
+      ),
       addPadding: false,
       appbarWidget: const Row(
         children: [

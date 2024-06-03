@@ -22,13 +22,46 @@ final mainRouter = GoRouter(
           },
         ),
         GoRoute(
+          path: ':id/edit',
+          builder: (context, state) {
+            final idCampeonato = state.pathParameters['id'] ?? '0';
+            return CampeonatoEdit(idCampeonato: int.parse(idCampeonato));
+          },
+        ),
+        GoRoute(
           path: ':id/equipos',
           builder: (context, state) {
             final idCampeonato = state.pathParameters['id'] ?? '0';
             return CampeonatoEquipos(idCampeonato: int.parse(idCampeonato));
           },
         ),
+        GoRoute(
+          path: ':id/partidos',
+          builder: (context, state) {
+            final idCampeonato = state.pathParameters['id'] ?? '0';
+            return CalendarioCampeonato(idCampeonato: int.parse(idCampeonato));
+          },
+        ),
+        GoRoute(
+          path: ':id/addEquipo',
+          builder: (context, state) {
+            final idCampeonato = state.pathParameters['id'] ?? '0';
+            return AddEquipoToCampeonato(idCampeonato: int.parse(idCampeonato));
+          },
+        ),
+        GoRoute(
+          path: ':id/addPartido',
+          builder: (context, state) {
+            final idCampeonato = state.pathParameters['id'] ?? '0';
+            return AddPartidoToCampeonato(
+                idCampeonato: int.parse(idCampeonato));
+          },
+        ),
       ],
+    ),
+    GoRoute(
+      path: '/addCampeonato',
+      builder: (context, state) => const AddCampeonato(),
     ),
     GoRoute(
       path: '/equipos',

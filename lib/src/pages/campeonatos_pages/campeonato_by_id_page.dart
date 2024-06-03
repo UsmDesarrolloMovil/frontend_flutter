@@ -1,8 +1,8 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:esports_app/models/campeonato_model.dart';
-import 'package:esports_app/models/equipo_model.dart';
 import 'package:esports_app/src/services/campeonatos/campeonatos_service.dart';
 import 'package:esports_app/src/widgets/custom_filled_button.dart';
+import 'package:esports_app/src/widgets/dialogs/dialogs.dart';
 import 'package:esports_app/src/widgets/gradient_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_material_design_icons/flutter_material_design_icons.dart';
@@ -31,6 +31,13 @@ class _CampeonatoByIdState extends State<CampeonatoById> {
     Size size = MediaQuery.of(context).size;
     final colors = Theme.of(context).colorScheme;
     return GradientScaffold(
+        floatingActionButton: SlideInRight(
+          delay: const Duration(seconds: 1),
+          child: FloatingActionButton(
+            onPressed: () => showOptionsCampeonatosDialog(context, widget.id),
+            child: const Icon(Icons.menu),
+          ),
+        ),
         showBackArrow: true,
         body: FutureBuilder(
           future: CampeonatoService().getById(widget.id),
@@ -64,7 +71,13 @@ class _CampeonatoByIdState extends State<CampeonatoById> {
                     text: 'Ver Participantes',
                     onPressed: () =>
                         context.push('/campeonatos/${campeonato.id}/equipos'),
-                  )
+                  ),
+                  const SizedBox(height: 15),
+                  CustomFilledButton(
+                    text: 'Calendario',
+                    onPressed: () =>
+                        context.push('/campeonatos/${campeonato.id}/partidos'),
+                  ),
                 ],
               ),
             );

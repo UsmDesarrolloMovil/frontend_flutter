@@ -1,8 +1,11 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:esports_app/models/equipo_model.dart';
 import 'package:esports_app/src/services/services.dart';
+import 'package:esports_app/src/widgets/dialogs/dialogs.dart';
 import 'package:esports_app/src/widgets/gradient_scaffold.dart';
 import 'package:esports_app/src/widgets/image_with_loader.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class CampeonatoEquipos extends StatelessWidget {
   final int idCampeonato;
@@ -13,7 +16,16 @@ class CampeonatoEquipos extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     final textStyles = Theme.of(context).textTheme;
     final colors = Theme.of(context).colorScheme;
+
     return GradientScaffold(
+        floatingActionButton: SlideInRight(
+          delay: const Duration(seconds: 1),
+          child: FloatingActionButton(
+            onPressed: () =>
+                context.push('/campeonatos/$idCampeonato/addEquipo'),
+            child: const Icon(Icons.add),
+          ),
+        ),
         showBackArrow: true,
         body: FutureBuilder(
           future: CampeonatoService().getEquipos(idCampeonato),
@@ -29,14 +41,16 @@ class CampeonatoEquipos extends StatelessWidget {
                 .toList();
             return Column(
               children: [
-                Container(
-                  margin: const EdgeInsets.only(bottom: 10),
-                  width: size.width,
-                  height: size.height * 0.15,
-                  child: Center(
-                    child: Text(
-                      'Equipos Clasificación',
-                      style: textStyles.titleMedium,
+                SlideInRight(
+                  child: Container(
+                    margin: const EdgeInsets.only(bottom: 10),
+                    width: size.width,
+                    height: size.height * 0.15,
+                    child: Center(
+                      child: Text(
+                        'Equipos Clasificación',
+                        style: textStyles.titleMedium,
+                      ),
                     ),
                   ),
                 ),
@@ -48,17 +62,32 @@ class CampeonatoEquipos extends StatelessWidget {
                     itemBuilder: (context, i) {
                       final equipo = equipos[i];
 
-                      return Container(
-                        margin: const EdgeInsets.only(bottom: 10),
-                        width: size.width,
-                        height: size.height * 0.1,
-                        decoration: BoxDecoration(
-                            color: colors.background,
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Row(
-                          children: [
-                            ImageWithLoader(imageUrl: equipo.imgUrl),
-                          ],
+                      return FadeInUp(
+                        child: InkWell(
+                          onTap: () => infoEquipoDialog(context, equipo),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 10),
+                            margin: const EdgeInsets.only(bottom: 10),
+                            width: size.width,
+                            height: size.height * 0.1,
+                            decoration: BoxDecoration(
+                                color: colors.background,
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Row(
+                              children: [
+                                ImageWithLoader(imageUrl: equipo.imgUrl),
+                                const SizedBox(width: 10),
+                                Text(equipo.nombre,
+                                    style: textStyles.titleSmall),
+                                const Spacer(),
+                                Text(
+                                  '${equipo.puntos}',
+                                  style: textStyles.titleSmall,
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
                       );
                     },

@@ -26,4 +26,10 @@ class CampeonatoService {
 
     return response.data;
   }
+
+  Future<List<dynamic>> getPartidos(int idCampeonato) async {
+    final response = await dio.get('/campeonatos/$idCampeonato/partidos');
+
+    return response.data;
+  }
 }
