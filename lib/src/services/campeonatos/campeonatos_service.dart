@@ -36,4 +36,8 @@ class CampeonatoService {
   Future<void> createCampeonato(Map<String, dynamic> campeonatoData) async {
     await dio.post('/campeonatos', data: campeonatoData);
   }
+
+  Future<void> deleteCampeonato(int id) async {
+    await dio.delete('/campeonatos/$id');
+  }
 }
