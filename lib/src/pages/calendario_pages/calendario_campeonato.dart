@@ -44,6 +44,17 @@ class CalendarioCampeonato extends StatelessWidget {
               children: [
                 Text('Calendario', style: textStyles.titleMedium),
                 const SizedBox(height: 15),
+                Padding(
+                  padding: const EdgeInsets.only(top: 30),
+                  child: Visibility(
+                    visible: partidos.isEmpty,
+                    child: Text(
+                      '😢 No hay partidos programados aún.',
+                      style: textStyles.titleSmall,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
                 ...partidos.map(
                   (partido) => CardPartido(
                     p: partido,

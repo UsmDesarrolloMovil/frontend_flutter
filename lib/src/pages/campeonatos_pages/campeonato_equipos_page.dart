@@ -83,7 +83,9 @@ class _CampeonatoEquiposState extends State<CampeonatoEquipos> {
             final equipos = List<Map<String, dynamic>>.from(data as List)
                 .map((c) => EquipoModel.fromApi(c))
                 .toList();
+
             return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SlideInRight(
                   child: Container(
@@ -95,6 +97,16 @@ class _CampeonatoEquiposState extends State<CampeonatoEquipos> {
                         'Equipos Clasificación',
                         style: textStyles.titleMedium,
                       ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 30),
+                  child: Visibility(
+                    visible: equipos.isEmpty,
+                    child: Text(
+                      '😢 No hay equipos asignados',
+                      style: textStyles.titleSmall,
                     ),
                   ),
                 ),
