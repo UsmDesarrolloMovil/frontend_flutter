@@ -26,7 +26,6 @@ class _AddEquipoToCampeonatoState extends State<AddEquipoToCampeonato> {
             child: Column(children: [
           Expanded(
             child: Container(
-              color: Colors.red,
               child: FutureBuilder(
                   future: EquipoService()
                       .getEquiposNoEnCampeonato(widget.idCampeonato),

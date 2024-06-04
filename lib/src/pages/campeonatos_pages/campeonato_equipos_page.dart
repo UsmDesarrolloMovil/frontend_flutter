@@ -22,7 +22,7 @@ class _CampeonatoEquiposState extends State<CampeonatoEquipos> {
     final textStyles = Theme.of(context).textTheme;
     final colors = Theme.of(context).colorScheme;
 
-    void openDialogDeleteEquipo(BuildContext context, equipoId) {
+    openDialogDeleteEquipo(BuildContext context, equipoId) {
       showDialog(
         barrierDismissible: false,
         context: context,
@@ -36,7 +36,21 @@ class _CampeonatoEquiposState extends State<CampeonatoEquipos> {
               child: const Text('Cancelar'),
             ),
             FilledButton(
-              onPressed: () {},
+              onPressed: () {
+                EquipoService()
+                    .deleteEquipoCampeonato(equipoId, widget.idCampeonato)
+                    .then((_) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Campeonato Borrado')),
+                  );
+                  context.pop();
+                  setState(() {});
+                }).catchError((error) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Error: $error')),
+                  );
+                });
+              },
               child: const Text('Aceptar'),
             )
           ],
@@ -100,8 +114,9 @@ class _CampeonatoEquiposState extends State<CampeonatoEquipos> {
                           highlightColor: Colors.transparent,
                           focusColor: colors.onError.withOpacity(.5),
                           splashColor: colors.onError.withOpacity(.5),
-                          onLongPress: () =>
-                              openDialogDeleteEquipo(context, equipo.id),
+                          onLongPress: () {
+                            openDialogDeleteEquipo(context, equipo.id);
+                          },
                           onTap: () => infoEquipoDialog(context, equipo),
                           child: Container(
                             padding: const EdgeInsets.symmetric(

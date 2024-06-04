@@ -71,4 +71,8 @@ class EquipoService {
       Map<String, dynamic> equipoCampeonatoData) async {
     await dio.post('/equipos-campeonatos', data: equipoCampeonatoData);
   }
+
+  Future<void> deleteEquipoCampeonato(int equipo_id, campeonato_id) async {
+    await dio.delete('/equipos-campeonatos/${equipo_id}/${campeonato_id}');
+  }
 }
