@@ -41,7 +41,7 @@ class _CampeonatoEquiposState extends State<CampeonatoEquipos> {
                     .deleteEquipoCampeonato(equipoId, widget.idCampeonato)
                     .then((_) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Campeonato Borrado')),
+                    SnackBar(content: Text('Equipo Borrado')),
                   );
                   context.pop();
                   setState(() {});
