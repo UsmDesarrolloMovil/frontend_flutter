@@ -32,4 +32,8 @@ class CampeonatoService {
 
     return response.data;
   }
+
+  Future<void> createCampeonato(Map<String, dynamic> campeonatoData) async {
+    await dio.post('/campeonatos', data: campeonatoData);
+  }
 }

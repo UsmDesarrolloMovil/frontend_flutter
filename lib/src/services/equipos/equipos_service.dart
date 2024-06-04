@@ -36,6 +36,11 @@ class EquipoService {
     return response.data;
   }
 
+  Future<List<dynamic>> getEquiposNoEnCampeonato(int idCampeonato) async {
+    final response = await dio.get('/equipos/no-en-campeonato/$idCampeonato');
+    return response.data;
+  }
+
   Future<void> updateEquipo(
       int idEquipo, Map<String, dynamic> equipoData) async {
     await dio.put('/equipos/$idEquipo', data: equipoData);
@@ -60,5 +65,10 @@ class EquipoService {
   Future<void> updateJugador(
       int idJugador, Map<String, dynamic> jugadorData) async {
     await dio.put('/jugadores/$idJugador', data: jugadorData);
+  }
+
+  Future<void> createEquipoCampeonato(
+      Map<String, dynamic> equipoCampeonatoData) async {
+    await dio.post('/equipos-campeonatos', data: equipoCampeonatoData);
   }
 }

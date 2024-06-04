@@ -9,16 +9,23 @@ import 'package:go_router/go_router.dart';
 
 import '../widgets/shared/custom_gradient.dart';
 
-class CampeonatosScreen extends StatelessWidget {
+class CampeonatosScreen extends StatefulWidget {
   const CampeonatosScreen({super.key});
 
+  @override
+  State<CampeonatosScreen> createState() => _CampeonatosScreenState();
+}
+
+class _CampeonatosScreenState extends State<CampeonatosScreen> {
   @override
   Widget build(BuildContext context) {
     return GradientScaffold(
       floatingActionButton: SlideInRight(
         delay: const Duration(seconds: 1),
         child: FloatingActionButton(
-          onPressed: () => context.push('/addCampeonato'),
+          onPressed: () => context.push('/addCampeonato').then((value) {
+            setState(() {});
+          }),
           child: const Icon(Icons.add),
         ),
       ),
@@ -45,6 +52,7 @@ class CampeonatosScreen extends StatelessWidget {
           final campeonatos = List<Map<String, dynamic>>.from(data as List)
               .map((c) => CampeonatoModel.fromApi(c))
               .toList();
+
           return _ListaCampeonatos(campeonatos);
         },
       ),
@@ -67,7 +75,6 @@ class _ListaCampeonatos extends StatelessWidget {
         itemCount: campeonatos.length,
         itemBuilder: (context, i) {
           final campeonato = campeonatos[i];
-
           return FadeInLeft(
             delay: Duration(milliseconds: 100 * i),
             child: Container(

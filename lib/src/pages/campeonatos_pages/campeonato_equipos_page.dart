@@ -7,10 +7,15 @@ import 'package:esports_app/src/widgets/shared/image_with_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class CampeonatoEquipos extends StatelessWidget {
+class CampeonatoEquipos extends StatefulWidget {
   final int idCampeonato;
   const CampeonatoEquipos({super.key, required this.idCampeonato});
 
+  @override
+  State<CampeonatoEquipos> createState() => _CampeonatoEquiposState();
+}
+
+class _CampeonatoEquiposState extends State<CampeonatoEquipos> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -21,14 +26,17 @@ class CampeonatoEquipos extends StatelessWidget {
         floatingActionButton: SlideInRight(
           delay: const Duration(seconds: 1),
           child: FloatingActionButton(
-            onPressed: () =>
-                context.push('/campeonatos/$idCampeonato/addEquipo'),
+            onPressed: () => context
+                .push('/campeonatos/${widget.idCampeonato}/addEquipo')
+                .then((value) {
+              setState(() {});
+            }),
             child: const Icon(Icons.add),
           ),
         ),
         showBackArrow: true,
         body: FutureBuilder(
-          future: CampeonatoService().getEquipos(idCampeonato),
+          future: CampeonatoService().getEquipos(widget.idCampeonato),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               return const Center(
