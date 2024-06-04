@@ -40,4 +40,9 @@ class CampeonatoService {
   Future<void> deleteCampeonato(int id) async {
     await dio.delete('/campeonatos/$id');
   }
+
+  Future<void> updateCampeonato(
+      int idCampeonato, Map<String, dynamic> campeonatoData) async {
+    await dio.put('/campeonatos/$idCampeonato', data: campeonatoData);
+  }
 }

@@ -18,7 +18,7 @@ class _EquipoByIdState extends State<EquipoById> {
     return GradientScaffold(
         appbarWidget: const Row(
           children: [
-            Text('Equipos'),
+            Text('Equipo'),
           ],
         ),
         body: FutureBuilder(

@@ -1,3 +1,5 @@
+import 'package:esports_app/src/services/campeonatos/campeonatos_service.dart';
+import 'package:esports_app/src/widgets/dialogs/campeonatos/delete_campeonato.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_material_design_icons/flutter_material_design_icons.dart';
 import 'package:go_router/go_router.dart';
@@ -8,6 +10,7 @@ void showOptionsCampeonatosDialog(BuildContext context, int idCampeonato) {
   Size size = MediaQuery.of(context).size;
   final textStyles = Theme.of(context).textTheme;
   final colors = Theme.of(context).colorScheme;
+
   showDialog(
     barrierDismissible: false,
     context: context,
@@ -64,7 +67,7 @@ void showOptionsCampeonatosDialog(BuildContext context, int idCampeonato) {
                           borderRadius: BorderRadius.circular(
                         10,
                       ))),
-                  onPressed: () {},
+                  onPressed: () => deleteCampeonato(context, idCampeonato),
                   child: const Row(
                     children: [
                       Icon(MdiIcons.deleteCircleOutline, color: Colors.white),

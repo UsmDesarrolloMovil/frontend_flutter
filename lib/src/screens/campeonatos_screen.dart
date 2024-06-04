@@ -82,110 +82,67 @@ class _ListaCampeonatosState extends State<_ListaCampeonatos> {
           final campeonato = widget.campeonatos[i];
           return FadeInLeft(
             delay: Duration(milliseconds: 100 * i),
-            child: InkWell(
-              onLongPress: () {
-                _deleteCampeonato(context, campeonato.id).then((_) {
-                  setState(() {});
-                });
-              },
-              child: Container(
-                height: size.height * 0.3,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                margin:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: Stack(
-                    children: [
-                      ImageWithLoader(imageUrl: campeonato.imgUrl),
-                      const CustomGradient(
-                        begin: Alignment.centerRight,
-                        end: Alignment.topRight,
-                        stops: [0.2, 1.0],
-                        colors: [
-                          Colors.transparent,
-                          Colors.black87,
+            child: Container(
+              height: size.height * 0.3,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Stack(
+                  children: [
+                    ImageWithLoader(imageUrl: campeonato.imgUrl),
+                    const CustomGradient(
+                      begin: Alignment.centerRight,
+                      end: Alignment.topRight,
+                      stops: [0.2, 1.0],
+                      colors: [
+                        Colors.transparent,
+                        Colors.black87,
+                      ],
+                    ),
+                    Positioned(
+                      left: 20,
+                      top: 20,
+                      child: Row(
+                        children: [
+                          const Icon(MdiIcons.trophy),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            campeonato.nombre,
+                            style: const TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ],
                       ),
-                      Positioned(
-                        left: 20,
-                        top: 20,
-                        child: Row(
-                          children: [
-                            const Icon(MdiIcons.trophy),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              campeonato.nombre,
-                              style: const TextStyle(
-                                fontSize: 17,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
+                    ),
+                    Positioned(
+                      bottom: 10,
+                      left: 20,
+                      child: ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: colors.onError,
+                        ),
+                        onPressed: () =>
+                            context.push('/campeonatos/${campeonato.id}'),
+                        icon: const Icon(MdiIcons.eye),
+                        label: const Text(
+                          'Detalles',
                         ),
                       ),
-                      Positioned(
-                        bottom: 10,
-                        left: 20,
-                        child: ElevatedButton.icon(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: colors.onError,
-                          ),
-                          onPressed: () =>
-                              context.push('/campeonatos/${campeonato.id}'),
-                          icon: const Icon(MdiIcons.eye),
-                          label: const Text(
-                            'Detalles',
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
+                    )
+                  ],
                 ),
               ),
             ),
           );
         },
       ),
-    );
-  }
-
-  _deleteCampeonato(BuildContext context, int idCampeonato) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Borrar campeonato'),
-          content: const Text('Deseas eliminar este campeonato?'),
-          actions: <Widget>[
-            TextButton(
-              child: Text('Cancelar'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            TextButton(
-                child: Text('Borrar'),
-                onPressed: () {
-                  CampeonatoService().deleteCampeonato(idCampeonato).then((_) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Campeonato Borrado')),
-                    );
-                    context.pop();
-                    context.pop();
-                  }).catchError((error) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Error: $error')),
-                    );
-                  });
-                }),
-          ],
-        );
-      },
     );
   }
 }
