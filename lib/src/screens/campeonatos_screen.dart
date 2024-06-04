@@ -83,11 +83,7 @@ class _ListaCampeonatosState extends State<_ListaCampeonatos> {
           return FadeInLeft(
             delay: Duration(milliseconds: 100 * i),
             child: InkWell(
-              onLongPress: () {
-                _deleteCampeonato(context, campeonato.id).then((_) {
-                  setState(() {});
-                });
-              },
+              onLongPress: () {},
               child: Container(
                 height: size.height * 0.3,
                 decoration: BoxDecoration(
@@ -151,41 +147,6 @@ class _ListaCampeonatosState extends State<_ListaCampeonatos> {
           );
         },
       ),
-    );
-  }
-
-  _deleteCampeonato(BuildContext context, int idCampeonato) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Borrar campeonato'),
-          content: const Text('Deseas eliminar este campeonato?'),
-          actions: <Widget>[
-            TextButton(
-              child: Text('Cancelar'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            TextButton(
-                child: Text('Borrar'),
-                onPressed: () {
-                  CampeonatoService().deleteCampeonato(idCampeonato).then((_) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Campeonato Borrado')),
-                    );
-                    context.pop();
-                    context.pop();
-                  }).catchError((error) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Error: $error')),
-                    );
-                  });
-                }),
-          ],
-        );
-      },
     );
   }
 }
