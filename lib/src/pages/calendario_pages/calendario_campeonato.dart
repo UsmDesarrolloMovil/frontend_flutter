@@ -3,7 +3,6 @@ import 'package:esports_app/models/partido_model.dart';
 import 'package:esports_app/src/services/campeonatos/campeonatos_service.dart';
 import 'package:esports_app/src/widgets/partidos/card_partidos.dart';
 import 'package:esports_app/src/widgets/shared/gradient_scaffold.dart';
-import 'package:esports_app/src/widgets/shared/image_with_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
