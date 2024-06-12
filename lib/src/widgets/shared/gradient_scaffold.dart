@@ -1,3 +1,4 @@
+import 'package:esports_app/src/widgets/shared/image_with_loader.dart';
 import 'package:flutter/material.dart';
 
 class GradientScaffold extends StatefulWidget {
@@ -5,6 +6,7 @@ class GradientScaffold extends StatefulWidget {
   final bool showBackArrow;
   final Widget? appbarWidget;
   final Widget? floatingActionButton;
+  final String? rightLogoUrl;
   final bool addPadding;
 
   const GradientScaffold({
@@ -14,6 +16,7 @@ class GradientScaffold extends StatefulWidget {
     this.addPadding = true,
     this.appbarWidget,
     this.floatingActionButton,
+    this.rightLogoUrl,
   });
 
   @override
@@ -21,31 +24,6 @@ class GradientScaffold extends StatefulWidget {
 }
 
 class _GradientScaffoldState extends State<GradientScaffold> {
-  final ScrollController _scrollController = ScrollController();
-
-  @override
-  void initState() {
-    super.initState();
-    _scrollController.addListener(_onScroll);
-  }
-
-  @override
-  void dispose() {
-    _scrollController.removeListener(_onScroll);
-    _scrollController.dispose();
-    super.dispose();
-  }
-
-  void _onScroll() {
-    // Check if the scroll offset is at the top or bottom to handle overscroll situation
-    if (_scrollController.offset <=
-            _scrollController.position.minScrollExtent ||
-        _scrollController.offset >=
-            _scrollController.position.maxScrollExtent) {
-      print('Overscroll detected');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
@@ -62,6 +40,20 @@ class _GradientScaffoldState extends State<GradientScaffold> {
                   ? Colors.transparent
                   : colors.onError.withOpacity(0.5),
               elevation: 0,
+              actions: widget.rightLogoUrl == null
+                  ? []
+                  : [
+                      Container(
+                        padding: const EdgeInsets.only(right: 20),
+                        width: size.width * 0.3,
+                        height: size.height * 0.06,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child:
+                              ImageWithLoader(imageUrl: widget.rightLogoUrl!),
+                        ),
+                      )
+                    ],
             ),
 
       body: SizedBox(

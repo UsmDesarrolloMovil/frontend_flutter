@@ -8,9 +8,11 @@ import 'package:go_router/go_router.dart';
 
 class CalendarioCampeonato extends StatefulWidget {
   final int idCampeonato;
+  final String? urlLogoCampeonato;
   const CalendarioCampeonato({
     super.key,
     required this.idCampeonato,
+    this.urlLogoCampeonato,
   });
 
   @override
@@ -57,11 +59,13 @@ class _CalendarioCampeonatoState extends State<CalendarioCampeonato> {
     final textStyles = Theme.of(context).textTheme;
     final colors = Theme.of(context).colorScheme;
     return GradientScaffold(
+      rightLogoUrl: widget.urlLogoCampeonato,
       floatingActionButton: SlideInRight(
         delay: const Duration(seconds: 1),
         child: FloatingActionButton(
           onPressed: () => context
-              .push('/campeonatos/${widget.idCampeonato}/addPartido')
+              .push('/campeonatos/${widget.idCampeonato}/addPartido',
+                  extra: widget.urlLogoCampeonato)
               .then((value) {
             //Solo si agrego un partido, refrescamos
             if (value != null) {
@@ -74,9 +78,13 @@ class _CalendarioCampeonatoState extends State<CalendarioCampeonato> {
       showBackArrow: true,
       body: SizedBox(
         width: size.width,
-        child: Column(
+        child: ListView(
+          padding: const EdgeInsets.only(top: 10),
+          physics: const BouncingScrollPhysics(),
           children: [
-            Text('Calendario', style: textStyles.titleMedium),
+            FadeInDown(
+                child: Center(
+                    child: Text('Calendario', style: textStyles.titleMedium))),
             const SizedBox(height: 15),
             loading
                 ? Center(

@@ -32,29 +32,44 @@ final mainRouter = GoRouter(
           path: ':id/equipos',
           builder: (context, state) {
             final idCampeonato = state.pathParameters['id'] ?? '0';
-            return CampeonatoEquipos(idCampeonato: int.parse(idCampeonato));
+            final String? urlLogo = state.extra as String?;
+            return CampeonatoEquipos(
+              idCampeonato: int.parse(idCampeonato),
+              urlLogoCampeonato: urlLogo,
+            );
           },
         ),
         GoRoute(
           path: ':id/partidos',
           builder: (context, state) {
             final idCampeonato = state.pathParameters['id'] ?? '0';
-            return CalendarioCampeonato(idCampeonato: int.parse(idCampeonato));
+            final String? urlLogo = state.extra as String?;
+            return CalendarioCampeonato(
+              idCampeonato: int.parse(idCampeonato),
+              urlLogoCampeonato: urlLogo,
+            );
           },
         ),
         GoRoute(
           path: ':id/addEquipo',
           builder: (context, state) {
             final idCampeonato = state.pathParameters['id'] ?? '0';
-            return AddEquipoToCampeonato(idCampeonato: int.parse(idCampeonato));
+            final String? urlLogo = state.extra as String?;
+            return AddEquipoToCampeonato(
+              idCampeonato: int.parse(idCampeonato),
+              urlLogoCampeonato: urlLogo,
+            );
           },
         ),
         GoRoute(
           path: ':id/addPartido',
           builder: (context, state) {
             final idCampeonato = state.pathParameters['id'] ?? '0';
+            final String? urlLogo = state.extra as String?;
             return AddPartidoToCampeonato(
-                idCampeonato: int.parse(idCampeonato));
+              idCampeonato: int.parse(idCampeonato),
+              urlLogoCampeonato: urlLogo,
+            );
           },
         ),
       ],

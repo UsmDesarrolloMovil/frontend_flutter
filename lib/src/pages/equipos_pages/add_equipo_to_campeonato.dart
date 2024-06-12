@@ -6,7 +6,9 @@ import 'package:go_router/go_router.dart';
 
 class AddEquipoToCampeonato extends StatefulWidget {
   final int idCampeonato;
-  const AddEquipoToCampeonato({super.key, required this.idCampeonato});
+  final String? urlLogoCampeonato;
+  const AddEquipoToCampeonato(
+      {super.key, required this.idCampeonato, this.urlLogoCampeonato});
 
   @override
   State<AddEquipoToCampeonato> createState() => _AddEquipoToCampeonatoState();
@@ -17,6 +19,7 @@ class _AddEquipoToCampeonatoState extends State<AddEquipoToCampeonato> {
   @override
   Widget build(BuildContext context) {
     return GradientScaffold(
+        rightLogoUrl: widget.urlLogoCampeonato,
         showBackArrow: true,
         body: Center(
             child: Column(children: [

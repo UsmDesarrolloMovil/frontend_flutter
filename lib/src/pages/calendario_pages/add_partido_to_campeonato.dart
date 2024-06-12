@@ -18,7 +18,9 @@ typedef VoidFunctionTwoString = void Function(String, String);
 
 class AddPartidoToCampeonato extends StatefulWidget {
   final int idCampeonato;
-  const AddPartidoToCampeonato({super.key, required this.idCampeonato});
+  final String? urlLogoCampeonato;
+  const AddPartidoToCampeonato(
+      {super.key, required this.idCampeonato, this.urlLogoCampeonato});
 
   @override
   State<AddPartidoToCampeonato> createState() => _AddPartidoToCampeonatoState();
@@ -74,6 +76,7 @@ class _AddPartidoToCampeonatoState extends State<AddPartidoToCampeonato> {
   Widget build(BuildContext context) {
     final textStyles = Theme.of(context).textTheme;
     return GradientScaffold(
+      rightLogoUrl: widget.urlLogoCampeonato,
       showBackArrow: true,
       body: loading
           ? const Center(

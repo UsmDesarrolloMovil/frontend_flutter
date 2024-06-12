@@ -9,7 +9,9 @@ import 'package:go_router/go_router.dart';
 
 class CampeonatoEquipos extends StatefulWidget {
   final int idCampeonato;
-  const CampeonatoEquipos({super.key, required this.idCampeonato});
+  final String? urlLogoCampeonato;
+  const CampeonatoEquipos(
+      {super.key, required this.idCampeonato, this.urlLogoCampeonato});
 
   @override
   State<CampeonatoEquipos> createState() => _CampeonatoEquiposState();
@@ -59,11 +61,13 @@ class _CampeonatoEquiposState extends State<CampeonatoEquipos> {
     }
 
     return GradientScaffold(
+        rightLogoUrl: widget.urlLogoCampeonato,
         floatingActionButton: SlideInRight(
           delay: const Duration(seconds: 1),
           child: FloatingActionButton(
             onPressed: () => context
-                .push('/campeonatos/${widget.idCampeonato}/addEquipo')
+                .push('/campeonatos/${widget.idCampeonato}/addEquipo',
+                    extra: widget.urlLogoCampeonato)
                 .then((value) {
               setState(() {});
             }),

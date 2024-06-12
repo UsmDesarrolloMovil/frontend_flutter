@@ -50,14 +50,18 @@ class _EquiposPartidosByIdState extends State<EquiposPartidosById> {
           ? const Center(child: CircularProgressIndicator(color: Colors.white))
           : SizedBox(
               width: size.width,
-              child: Column(
+              child: ListView(
+                padding: const EdgeInsets.only(top: 0),
                 children: [
-                  Text(equipoNombre, style: textStyles.titleMedium),
+                  Center(
+                      child: Text(equipoNombre, style: textStyles.titleMedium)),
                   const SizedBox(height: 10),
-                  SizedBox(
-                    width: size.height * 0.2,
-                    height: size.height * 0.2,
-                    child: ImageWithLoader(imageUrl: equipoImagen),
+                  Center(
+                    child: SizedBox(
+                      width: size.height * 0.2,
+                      height: size.height * 0.2,
+                      child: ImageWithLoader(imageUrl: equipoImagen),
+                    ),
                   ),
                   const SizedBox(height: 10),
                   Padding(
@@ -68,7 +72,7 @@ class _EquiposPartidosByIdState extends State<EquiposPartidosById> {
                         const Icon(MdiIcons.gamepadCircle),
                         const SizedBox(width: 10),
                         Text(
-                          'Partidos que ha Jugado',
+                          'Partidos asociados',
                           style: textStyles.titleSmall,
                           textAlign: TextAlign.start,
                         ),
