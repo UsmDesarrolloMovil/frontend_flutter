@@ -6,13 +6,21 @@ class CustomTextInput extends StatefulWidget {
   final String placeHolder;
   final TextInputType inputType;
   final VoidCallback validator;
+  // final VoidCallback? onChanged;
+  final String? initialValue;
+  final int? maxLength;
+  final bool disabled;
   const CustomTextInput({
     super.key,
     required this.controller,
     required this.label,
     required this.placeHolder,
     this.inputType = TextInputType.text,
+    this.disabled = false,
     required this.validator,
+    this.initialValue,
+    this.maxLength,
+    // this.onChanged,
   });
 
   @override
@@ -27,12 +35,15 @@ class _CustomTextInputState extends State<CustomTextInput> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TextFormField(
+          maxLength: widget.maxLength,
+          initialValue: widget.initialValue,
           controller: widget.controller,
           keyboardType: widget.inputType,
           decoration: InputDecoration(
+            enabled: !widget.disabled,
             labelText: widget.label,
-            labelStyle: const TextStyle(
-              color: Colors.white,
+            labelStyle: TextStyle(
+              color: widget.disabled ? colors.background : Colors.white,
               fontWeight: FontWeight.bold,
             ),
             hintText: widget.placeHolder,
@@ -59,6 +70,13 @@ class _CustomTextInputState extends State<CustomTextInput> {
                 width: 2.0,
               ),
             ),
+            disabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.0),
+              borderSide: BorderSide(
+                color: colors.background,
+                width: 3.0,
+              ),
+            ),
             focusedErrorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.0),
               borderSide: BorderSide(
@@ -80,15 +98,10 @@ class _CustomTextInputState extends State<CustomTextInput> {
             ),
             floatingLabelBehavior: FloatingLabelBehavior.always,
           ),
+          // onChanged: null,
           onChanged: (value) => widget.validator(),
-          onTap: () {
-            // if (!_hasInitialValue && widget.controller.text.isEmpty) {
-            //   setState(() {
-            //     widget.controller.text = '0';
-            //     _hasInitialValue = true;
-            //   });
-            // }
-          },
+          // onTap: null,
+          // onTap: () {},
         ),
       ],
     );

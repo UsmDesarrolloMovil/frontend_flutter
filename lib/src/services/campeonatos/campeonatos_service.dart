@@ -33,6 +33,18 @@ class CampeonatoService {
     return response.data;
   }
 
+  Future<dynamic> getPartido(int idPartido) async {
+    final response = await dio.get('/partidos/$idPartido');
+
+    return response.data;
+  }
+
+  Future<dynamic> editPartido(Map<String, dynamic> partidoData) async {
+    final response = await dio.post('/partido/actualizar', data: partidoData);
+
+    return response.data;
+  }
+
   Future<void> deletePartido(int idPartido) async {
     await dio.delete('/partidos/$idPartido');
   }

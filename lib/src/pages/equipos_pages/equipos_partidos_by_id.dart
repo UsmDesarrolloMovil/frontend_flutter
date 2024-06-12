@@ -80,9 +80,6 @@ class _EquiposPartidosByIdState extends State<EquiposPartidosById> {
                     ),
                   ),
                   ...partidos.map((partido) => CardPartido(
-                        size: size,
-                        colors: colors,
-                        textStyles: textStyles,
                         p: partido,
                         refreshState: () {},
                       ))

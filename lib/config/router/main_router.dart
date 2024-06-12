@@ -79,6 +79,13 @@ final mainRouter = GoRouter(
       builder: (context, state) => const AddCampeonato(),
     ),
     GoRoute(
+      path: '/partido/:id/edit',
+      builder: (context, state) {
+        final idPartido = state.pathParameters['id'] ?? '0';
+        return EditPartidoOfCampeonato(idPartido: int.parse(idPartido));
+      },
+    ),
+    GoRoute(
       path: '/equipos',
       builder: (context, state) => const EquiposScreen(),
       routes: [

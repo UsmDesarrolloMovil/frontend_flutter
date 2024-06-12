@@ -8,18 +8,13 @@ import 'package:go_router/go_router.dart';
 class CardPartido extends StatelessWidget {
   const CardPartido({
     super.key,
-    required this.size,
-    required this.colors,
-    required this.textStyles,
     required this.p,
     required this.refreshState,
   });
 
   final VoidCallback refreshState;
   final PartidoModel p;
-  final Size size;
-  final ColorScheme colors;
-  final TextTheme textStyles;
+
   Future<void> openDialogDeletePartido(BuildContext context, partidoId) {
     return showDialog(
       barrierDismissible: false,
@@ -49,6 +44,9 @@ class CardPartido extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+    final textStyles = Theme.of(context).textTheme;
+    Size size = MediaQuery.of(context).size;
     return FadeInLeft(
       child: InkWell(
         radius: 80,
@@ -57,6 +55,11 @@ class CardPartido extends StatelessWidget {
         highlightColor: Colors.transparent,
         focusColor: colors.onError.withOpacity(.5),
         splashColor: colors.onError.withOpacity(.5),
+        onTap: () => context.push('/partido/${p.id}/edit').then((value) {
+          if (value as bool) {
+            refreshState();
+          }
+        }),
         onLongPress: () => openDialogDeletePartido(context, p.id),
         child: Container(
           width: size.width * 0.9,
@@ -68,13 +71,14 @@ class CardPartido extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
           ),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   SizedBox(
-                    height: 50,
-                    width: 50,
+                    height: 45,
+                    width: 45,
                     child: ImageWithLoader(imageUrl: p.imagenLocal),
                   ),
                   // const SizedBox(height: 10),
@@ -85,7 +89,13 @@ class CardPartido extends StatelessWidget {
                 ],
               ),
               const SizedBox(width: 15),
-              Text('${p.puntosLocal ?? '-'}', style: textStyles.titleMedium),
+              Container(
+                width: 40,
+                height: 40,
+                alignment: Alignment.center,
+                child: Text('${p.puntosLocal ?? '-'}',
+                    style: textStyles.titleMedium),
+              ),
               const Spacer(),
               Column(
                 mainAxisAlignment: p.isFinished
@@ -100,10 +110,10 @@ class CardPartido extends StatelessWidget {
                   ),
                   p.isFinished
                       ? Padding(
-                          padding: const EdgeInsets.only(top: 20),
+                          padding: EdgeInsets.only(top: size.height * 0.02),
                           child: Text(
                             'Finalizado',
-                            style: textStyles.titleSmall,
+                            style: textStyles.bodyLarge,
                           ),
                         )
                       : const SizedBox(),
@@ -114,25 +124,38 @@ class CardPartido extends StatelessWidget {
                         )
                       : const SizedBox(),
                   !p.isFinished
-                      ? Text(
-                          p.fecha.split(' ')[0],
-                          style: TextStyle(
-                            color: Colors.white.withOpacity(0.3),
+                      ? Pulse(
+                          curve: Curves.linear,
+                          animate: p.estado == 2,
+                          infinite: true,
+                          duration: const Duration(seconds: 2),
+                          child: Text(
+                            p.estado == 2
+                                ? '!En Curso!'
+                                : p.fecha.split(' ')[0],
+                            style: TextStyle(
+                                color: Colors.white.withOpacity(0.3),
+                                fontSize: 14),
                           ),
                         )
                       : const SizedBox(),
                 ],
               ),
               const Spacer(),
-              Text('${p.puntosVisitante ?? '-'}',
-                  style: textStyles.titleMedium),
+              Container(
+                width: 40,
+                height: 40,
+                alignment: Alignment.center,
+                child: Text('${p.puntosVisitante ?? '-'}',
+                    style: textStyles.titleMedium),
+              ),
               const SizedBox(width: 15),
               Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   SizedBox(
-                    height: 50,
-                    width: 50,
+                    height: 45,
+                    width: 45,
                     child: ImageWithLoader(imageUrl: p.imagenVisitante),
                   ),
                   ...p.equipoVisitante.split(' ').map((n) => Text(n,

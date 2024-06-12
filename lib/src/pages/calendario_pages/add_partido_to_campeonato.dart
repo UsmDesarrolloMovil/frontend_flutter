@@ -53,8 +53,10 @@ class _AddPartidoToCampeonatoState extends State<AddPartidoToCampeonato> {
       setState(() {
         equipos = equiposFetched;
         loading = false;
-        equipoLocalId = equipos[0].id;
-        equipoVisitanteId = equipos[1].id;
+        if (equipos.length >= 2) {
+          equipoLocalId = equipos[0].id;
+          equipoVisitanteId = equipos[1].id;
+        }
       });
     });
   }
@@ -97,86 +99,97 @@ class _AddPartidoToCampeonatoState extends State<AddPartidoToCampeonato> {
                               isEquiposIguales = local == visitante;
                             });
                           }),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                    child: CustomTextInput(
-                      controller: _controllerLugar,
-                      label: 'Lugar',
-                      placeHolder: 'Estadio Monumental',
-                      validator: () {
-                        setState(() {
-                          isInvalidLugar =
-                              _controllerLugar.value.text.isEmpty ||
-                                  _controllerLugar.value.text.length < 3;
-                        });
-                      },
-                    ),
-                  ),
-                  const SizedBox(height: 30),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                    child: CustomDateInput(
-                      controller: _controllerDate,
-                      label: 'Fecha',
-                      validator: (String? errorsDate) {
-                        setState(() {
-                          isInvalidDate = errorsDate != null;
-                        });
-                      },
-                    ),
-                  ),
-                  const SizedBox(height: 30),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                    child: CustomHourInput(
-                      controller: _controllerHour,
-                      label: 'Hora',
-                      validator: (String? errorsHour) {
-                        setState(() {
-                          isInvalidHour = errorsHour != null;
-                        });
-                      },
-                    ),
-                  ),
-                  const SizedBox(height: 30),
-                  CustomFilledButton(
-                    disabled: isEquiposIguales ||
-                        isInvalidDate ||
-                        isInvalidHour ||
-                        isInvalidLugar ||
-                        creating,
-                    onPressed: () {
-                      if (isEquiposIguales) return;
-                      if (isInvalidDate) return;
-                      if (isInvalidHour) return;
-                      if (_controllerLugar.value.text.isEmpty &&
-                          _controllerLugar.value.text.length < 3) return;
-                      FocusScope.of(context)
-                          .unfocus(); // Cierra el teclado si esta abierto
-                      setState(() {
-                        creating = true;
-                      });
+                  equipos.isEmpty && equipos.length < 2
+                      ? Container()
+                      : Column(
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 30),
+                              child: CustomTextInput(
+                                controller: _controllerLugar,
+                                label: 'Lugar',
+                                placeHolder: 'Estadio Monumental',
+                                validator: () {
+                                  setState(() {
+                                    isInvalidLugar = _controllerLugar
+                                            .value.text.isEmpty ||
+                                        _controllerLugar.value.text.length < 3;
+                                  });
+                                },
+                              ),
+                            ),
+                            const SizedBox(height: 30),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 30),
+                              child: CustomDateInput(
+                                controller: _controllerDate,
+                                label: 'Fecha',
+                                validator: (String? errorsDate) {
+                                  setState(() {
+                                    isInvalidDate = errorsDate != null;
+                                  });
+                                },
+                              ),
+                            ),
+                            const SizedBox(height: 30),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 30),
+                              child: CustomHourInput(
+                                controller: _controllerHour,
+                                label: 'Hora',
+                                validator: (String? errorsHour) {
+                                  setState(() {
+                                    isInvalidHour = errorsHour != null;
+                                  });
+                                },
+                              ),
+                            ),
+                            const SizedBox(height: 30),
+                            CustomFilledButton(
+                              disabled: isEquiposIguales ||
+                                  isInvalidDate ||
+                                  isInvalidHour ||
+                                  isInvalidLugar ||
+                                  creating,
+                              onPressed: () {
+                                if (isEquiposIguales) return;
+                                if (isInvalidDate) return;
+                                if (isInvalidHour) return;
+                                if (_controllerLugar.value.text.isEmpty &&
+                                    _controllerLugar.value.text.length < 3)
+                                  return;
+                                FocusScope.of(context)
+                                    .unfocus(); // Cierra el teclado si esta abierto
+                                setState(() {
+                                  creating = true;
+                                });
 
-                      _campeonatoService.createPartido({
-                        'campeonato_id': widget.idCampeonato,
-                        'equipo_local_id': equipoLocalId,
-                        'equipo_visitante_id': equipoVisitanteId,
-                        'fecha': _controllerDate.value.text,
-                        'hora': _controllerHour.value.text,
-                        'lugar': _controllerLugar.value.text,
-                        'estado': 0, // --> Pendiente
-                      }).then((value) {
-                        setState(() {
-                          creating = false;
-                        });
-                        context.pop(true);
-                      });
-                    },
-                    widgetText: creating
-                        ? const CircularProgressIndicator()
-                        : const Text('Añadir'),
-                    fullWidth: true,
-                  ),
+                                _campeonatoService.createPartido({
+                                  'campeonato_id': widget.idCampeonato,
+                                  'equipo_local_id': equipoLocalId,
+                                  'equipo_visitante_id': equipoVisitanteId,
+                                  'fecha': _controllerDate.value.text,
+                                  'hora': _controllerHour.value.text,
+                                  'lugar': _controllerLugar.value.text,
+                                  'estado': 0, // --> Pendiente
+                                }).then((value) {
+                                  setState(() {
+                                    creating = false;
+                                  });
+                                  context.pop(true);
+                                });
+                              },
+                              widgetText: creating
+                                  ? const CircularProgressIndicator()
+                                  : const Text('Añadir'),
+                              fullWidth: true,
+                            ),
+                          ],
+                        ),
+                  const SizedBox(height: 30),
                 ],
               ),
             ),

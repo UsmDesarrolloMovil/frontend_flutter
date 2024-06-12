@@ -78,7 +78,8 @@ class _CampeonatoEquiposState extends State<CampeonatoEquipos> {
         body: FutureBuilder(
           future: CampeonatoService().getEquipos(widget.idCampeonato),
           builder: (context, snapshot) {
-            if (!snapshot.hasData) {
+            if (!snapshot.hasData ||
+                snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
                   child: CircularProgressIndicator(color: Colors.white));
             }

@@ -108,9 +108,6 @@ class _CalendarioCampeonatoState extends State<CalendarioCampeonato> {
                       ...partidos.map(
                         (partido) => CardPartido(
                             p: partido,
-                            size: size,
-                            colors: colors,
-                            textStyles: textStyles,
                             refreshState: () {
                               fetchPartidos(widget.idCampeonato, true);
                             }),
