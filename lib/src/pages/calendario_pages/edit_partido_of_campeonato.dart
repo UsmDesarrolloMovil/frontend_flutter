@@ -223,7 +223,9 @@ class _EditPartidoOfCampeonatoState extends State<EditPartidoOfCampeonato> {
                   ),
                   const SizedBox(height: 15),
                   CustomFilledButton(
-                    disabled: estado == partido.estado || editing,
+                    disabled: estado == partido.estado ||
+                        editing ||
+                        partido.estado == 1,
                     onPressed: () async {
                       //Validaciones
                       if (estado == partido.estado) return;
