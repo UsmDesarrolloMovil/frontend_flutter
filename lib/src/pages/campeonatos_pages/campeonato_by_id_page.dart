@@ -68,13 +68,13 @@ class _CampeonatoByIdState extends State<CampeonatoById> {
                   ),
                   SizedBox(height: size.height * 0.07),
                   CustomFilledButton(
-                    text: 'Ver Participantes',
+                    widgetText: const Text('Ver Participantes'),
                     onPressed: () =>
                         context.push('/campeonatos/${campeonato.id}/equipos'),
                   ),
                   const SizedBox(height: 15),
                   CustomFilledButton(
-                    text: 'Calendario',
+                    widgetText: const Text('Calendario'),
                     onPressed: () =>
                         context.push('/campeonatos/${campeonato.id}/partidos'),
                   ),

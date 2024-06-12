@@ -1,4 +1,5 @@
 import 'package:esports_app/models/partido_model.dart';
+import 'package:esports_app/src/services/campeonatos/campeonatos_service.dart';
 import 'package:esports_app/src/widgets/shared/image_with_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -10,14 +11,16 @@ class CardPartido extends StatelessWidget {
     required this.colors,
     required this.textStyles,
     required this.p,
+    required this.refreshState,
   });
 
+  final VoidCallback refreshState;
   final PartidoModel p;
   final Size size;
   final ColorScheme colors;
   final TextTheme textStyles;
-  void openDialogDeletePartido(BuildContext context, partidoId) {
-    showDialog(
+  Future<void> openDialogDeletePartido(BuildContext context, partidoId) {
+    return showDialog(
       barrierDismissible: false,
       context: context,
       builder: (context) => AlertDialog(
@@ -30,7 +33,12 @@ class CardPartido extends StatelessWidget {
             child: const Text('Cancelar'),
           ),
           FilledButton(
-            onPressed: () {},
+            onPressed: () async {
+              await CampeonatoService().deletePartido(partidoId).then((value) {
+                context.pop();
+                refreshState();
+              });
+            },
             child: const Text('Aceptar'),
           )
         ],

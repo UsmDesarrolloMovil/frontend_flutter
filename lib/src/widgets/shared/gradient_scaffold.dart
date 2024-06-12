@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class GradientScaffold extends StatelessWidget {
+class GradientScaffold extends StatefulWidget {
   final Widget body;
   final bool showBackArrow;
   final Widget? appbarWidget;
@@ -17,18 +17,48 @@ class GradientScaffold extends StatelessWidget {
   });
 
   @override
+  State<GradientScaffold> createState() => _GradientScaffoldState();
+}
+
+class _GradientScaffoldState extends State<GradientScaffold> {
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_onScroll);
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    // Check if the scroll offset is at the top or bottom to handle overscroll situation
+    if (_scrollController.offset <=
+            _scrollController.position.minScrollExtent ||
+        _scrollController.offset >=
+            _scrollController.position.maxScrollExtent) {
+      print('Overscroll detected');
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor: appbarWidget == null ? Colors.transparent : null,
+      backgroundColor: widget.appbarWidget == null ? Colors.transparent : null,
       extendBodyBehindAppBar: true, // Extender el body detrás del AppBar
-      appBar: appbarWidget == null && !showBackArrow
+      appBar: widget.appbarWidget == null && !widget.showBackArrow
           ? null
           : AppBar(
-              title: appbarWidget,
-              backgroundColor: appbarWidget == null
+              title: widget.appbarWidget,
+              backgroundColor: widget.appbarWidget == null
                   ? Colors.transparent
                   : colors.onError.withOpacity(0.5),
               elevation: 0,
@@ -42,7 +72,7 @@ class GradientScaffold extends StatelessWidget {
             Container(
               width: size.width,
               height: size.height * 0.4,
-              decoration: appbarWidget == null
+              decoration: widget.appbarWidget == null
                   ? BoxDecoration(
                       gradient: LinearGradient(
                         begin: Alignment.topCenter,
@@ -83,19 +113,19 @@ class GradientScaffold extends StatelessWidget {
               bottom: 0,
               top: 0,
               child: Container(
-                padding: addPadding
+                padding: widget.addPadding
                     ? EdgeInsets.only(
                         top: (MediaQuery.of(context).padding.top) +
                             size.height * 0.12)
                     : null,
                 // width: ,
-                child: body,
+                child: widget.body,
               ),
             ),
           ],
         ),
       ),
-      floatingActionButton: floatingActionButton,
+      floatingActionButton: widget.floatingActionButton,
     );
   }
 }

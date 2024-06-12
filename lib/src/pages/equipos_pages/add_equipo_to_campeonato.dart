@@ -1,11 +1,7 @@
 import 'package:esports_app/models/equipo_model.dart';
-import 'package:esports_app/src/pages/equipos_pages/equipo_by_id_page.dart';
-import 'package:esports_app/src/services/campeonatos/campeonatos_service.dart';
 import 'package:esports_app/src/services/equipos/equipos_service.dart';
 import 'package:esports_app/src/widgets/shared/gradient_scaffold.dart';
-import 'package:esports_app/src/widgets/shared/image_with_loader.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 
 class AddEquipoToCampeonato extends StatefulWidget {
@@ -25,58 +21,55 @@ class _AddEquipoToCampeonatoState extends State<AddEquipoToCampeonato> {
         body: Center(
             child: Column(children: [
           Expanded(
-            child: Container(
-              child: FutureBuilder(
-                  future: EquipoService()
-                      .getEquiposNoEnCampeonato(widget.idCampeonato),
-                  builder: (context, snapshot) {
-                    if (!snapshot.hasData) {
-                      return const Center(
-                        child: CircularProgressIndicator(color: Colors.white),
-                      );
-                    }
+            child: FutureBuilder(
+                future: EquipoService()
+                    .getEquiposNoEnCampeonato(widget.idCampeonato),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return const Center(
+                      child: CircularProgressIndicator(color: Colors.white),
+                    );
+                  }
 
-                    final data = snapshot.data!;
-                    final equipos =
-                        List<Map<String, dynamic>>.from(data as List)
-                            .map((e) => EquipoModel.fromApi(e))
-                            .toList();
-                    return ListView.builder(
-                      itemCount: equipos.length,
-                      itemBuilder: (context, index) {
-                        final equipo = equipos[index];
-                        return CheckboxListTile(
-                          title: Row(
-                            children: [
-                              SizedBox(
-                                  height: 45,
-                                  width: 45,
-                                  child: Image.network(equipo.imgUrl)),
-                              SizedBox(
+                  final data = snapshot.data!;
+                  final equipos = List<Map<String, dynamic>>.from(data as List)
+                      .map((e) => EquipoModel.fromApi(e))
+                      .toList();
+                  return ListView.builder(
+                    itemCount: equipos.length,
+                    itemBuilder: (context, index) {
+                      final equipo = equipos[index];
+                      return CheckboxListTile(
+                        title: Row(
+                          children: [
+                            SizedBox(
                                 height: 45,
                                 width: 45,
-                              ),
-                              Text(equipo.nombre),
-                            ],
-                          ),
-                          value: equiposId.contains(equipo.id),
-                          onChanged: (bool? newValue) {
-                            setState(() {
-                              if (newValue == true) {
-                                equiposId.add(equipo.id);
-                                print(equiposId);
-
-                                return;
-                              }
-                              equiposId.remove(equipo.id);
+                                child: Image.network(equipo.imgUrl)),
+                            SizedBox(
+                              height: 45,
+                              width: 45,
+                            ),
+                            Text(equipo.nombre),
+                          ],
+                        ),
+                        value: equiposId.contains(equipo.id),
+                        onChanged: (bool? newValue) {
+                          setState(() {
+                            if (newValue == true) {
+                              equiposId.add(equipo.id);
                               print(equiposId);
-                            });
-                          },
-                        );
-                      },
-                    );
-                  }),
-            ),
+
+                              return;
+                            }
+                            equiposId.remove(equipo.id);
+                            print(equiposId);
+                          });
+                        },
+                      );
+                    },
+                  );
+                }),
           ),
           Container(
               height: 75,

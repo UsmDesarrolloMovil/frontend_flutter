@@ -3,13 +3,15 @@ import 'package:animate_do/animate_do.dart';
 
 class CustomFilledButton extends StatelessWidget {
   final VoidCallback onPressed;
-  final String text;
+  final Widget widgetText;
   final bool animated;
   final bool fullWidth;
+  final bool disabled;
   const CustomFilledButton({
     super.key,
     required this.onPressed,
-    required this.text,
+    required this.widgetText,
+    this.disabled = false,
     this.animated = false,
     this.fullWidth = false,
   });
@@ -25,13 +27,14 @@ class CustomFilledButton extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
+        disabledBackgroundColor: colors.onError.withOpacity(.5),
         padding: EdgeInsets.symmetric(
           vertical: 17,
           horizontal: fullWidth ? 0 : 10,
         ),
       ),
-      onPressed: onPressed,
-      child: Text(text),
+      onPressed: disabled ? null : onPressed,
+      child: widgetText,
     );
     return SlideInUp(
       child: fullWidth

@@ -36,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Visibility(
             visible: selectedContainer != null,
             child: CustomFilledButton(
-              text: 'Continuar',
+              widgetText: const Text('Continuar'),
               animated: true,
               fullWidth: true,
               onPressed: () {
