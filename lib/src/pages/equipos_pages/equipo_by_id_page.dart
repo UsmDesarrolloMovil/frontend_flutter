@@ -2,6 +2,7 @@ import 'package:esports_app/models/equipo_model.dart';
 import 'package:esports_app/src/services/equipos/equipos_service.dart';
 import 'package:esports_app/src/widgets/shared/gradient_scaffold.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 
 class EquipoById extends StatefulWidget {
@@ -68,6 +69,30 @@ class _EquipoByIdState extends State<EquipoById> {
                               }
                               final data = snapshot.data;
                               final jugadores = data;
+                              if (jugadores!.isEmpty) {
+                                return Center(
+                                  child: ListView(
+                                    children: [
+                                      Spacer(),
+                                      Center(
+                                        child: Text(
+                                          'No hay jugadores en este equipo!',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 24),
+                                        ),
+                                      ),
+                                      Spacer(),
+                                      Center(
+                                          child: Text('Haz click en el boton')),
+                                      Center(child: Text('de abajo para')),
+                                      Center(
+                                          child: Text('ingresar un jugador.')),
+                                      Spacer(),
+                                    ],
+                                  ),
+                                );
+                              }
                               return ListView.builder(
                                   padding: EdgeInsets.only(top: 0),
                                   itemCount: jugadores!.length,
